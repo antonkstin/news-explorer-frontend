@@ -8,7 +8,7 @@
   <meta name="author" content="Константин Миков">
   <title>NewsExplorer</title>
   <link type="image/png" rel="shortcut icon" href="../../images/favicon.png">
-  <link rel="stylesheet" href="<%= htmlWebpackPlugin.files.chunks[chunk].index.css %>">
+  <link rel="stylesheet" href="<%= htmlWebpackPlugin.files.css %>">
 </head>
 <body>
 
@@ -17,7 +17,7 @@
 
     <nav class="header__links">
       <a class="link text" href="../index.html">Главная</a>
-      <a class="link link_selected link_selected_dark text" href="./index.html">Сохранённые статьи</a>
+      <a class="link link_selected link_selected_dark text" href="./articles.html">Сохранённые статьи</a>
       <a class="link link_surrounded link_surrounded_dark link_auth link_auth_dark text" href="../index.html">Грета</a>
     </nav>
 
@@ -71,7 +71,7 @@
     <p class="footer__copyright minitext">&copy;2020 Supersite, Powered by News API</p>
 
     <nav class="footer__links">
-      <a class="link text" href="./index.html">Главная</a>
+      <a class="link text" href="../index.html">Главная</a>
       <a class="link text" href="https://praktikum.yandex.ru/web/" target="_blank">Яндекс.Практикум</a>
       <div class="footer__icons">
         <a class="link link_git" href="https://github.com/antonkstin" target="_blank"></a>
@@ -87,7 +87,7 @@
 
       <nav class="header__links">
         <a class="link text" href="../index.html">Главная</a>
-        <a class="link link_selected link_selected_dark text" href="./index.html">Сохранённые статьи</a>
+        <a class="link link_selected link_selected_dark text" href="./articles.html">Сохранённые статьи</a>
         <a class="link link_surrounded link_surrounded_dark link_auth link_auth_dark text" href="../index.html">Грета</a>
       </nav>
 
@@ -95,7 +95,10 @@
     </header>
   </section>
 
-  <script src="<%= htmlWebpackPlugin.files.js[1] %>"></script>
+  <script src="<%= htmlWebpackPlugin.files.js %>"></script>
 </body>
 </html>
-<!-- <%= htmlWebpackPlugin.files.js %> -->
+
+<!-- <%= htmlWebpackPlugin.files.js %>
+  <p><%= JSON.stringify(htmlWebpackPlugin, null, 2) %></p>
+-->

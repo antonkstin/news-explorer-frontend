@@ -6,12 +6,12 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 module.exports = {
   entry: {
-    index: './src/index.js',
-    articles: './src/saved-articles/index.js',
+    index: ['./src/index.js'],
+    articles: ['./src/saved-articles/articles.js'],
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '[name].[chunkhash].js',
+    filename: 'js/[name].[chunkhash].js',
   },
   module: {
     rules: [
@@ -22,7 +22,14 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: { publicPath: '../' },
+          },
+          'css-loader',
+          'postcss-loader',
+        ],
       },
       {
         test: /\.(png|jpg|gif|ico|svg)$/,
@@ -42,7 +49,7 @@ module.exports = {
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: '[name].[contenthash].css',
+      filename: 'css/[name].[contenthash].css',
     }),
     new OptimizeCssAssetsPlugin({
       assetNameRegExp: /\.css$/g,
@@ -54,15 +61,15 @@ module.exports = {
       canPrint: true,
     }),
     new HtmlWebpackPlugin({
-      inject: true,
+      inject: false,
       template: './src/index.html',
       filename: 'index.html',
       chunks: ['index'],
     }),
     new HtmlWebpackPlugin({
-      inject: true,
-      template: './src/saved-articles/index.html',
-      filename: 'articles/index.html',
+      inject: false,
+      template: './src/saved-articles/articles.html',
+      filename: 'articles/articles.html',
       chunks: ['articles'],
     }),
     new WebpackMd5Hash(),

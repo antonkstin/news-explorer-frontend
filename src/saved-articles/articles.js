@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import './index.css';
+import './articles.css';
 
 document.querySelector('.header__icon').addEventListener('click', () => {
   document.querySelector('.burger-menu').style.display = 'block';

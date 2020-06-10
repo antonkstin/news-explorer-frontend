@@ -5,7 +5,10 @@ const WebpackMd5Hash = require('webpack-md5-hash');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 module.exports = {
-  entry: { main: './src/index.js' },
+  entry: {
+    index: './src/index.js',
+    articles: './src/saved-articles/index.js',
+  },
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].[chunkhash].js',
@@ -24,7 +27,7 @@ module.exports = {
       {
         test: /\.(png|jpg|gif|ico|svg)$/,
         use: [
-          'file-loader?name=../images/[name].[ext]',
+          'file-loader?name=./images/[name].[ext]',
           {
             loader: 'image-webpack-loader',
             options: {},
@@ -39,7 +42,7 @@ module.exports = {
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: 'index.[contenthash].css',
+      filename: '[name].[contenthash].css',
     }),
     new OptimizeCssAssetsPlugin({
       assetNameRegExp: /\.css$/g,
@@ -51,9 +54,16 @@ module.exports = {
       canPrint: true,
     }),
     new HtmlWebpackPlugin({
-      inject: false,
+      inject: true,
       template: './src/index.html',
       filename: 'index.html',
+      chunks: ['index'],
+    }),
+    new HtmlWebpackPlugin({
+      inject: true,
+      template: './src/saved-articles/index.html',
+      filename: 'articles/index.html',
+      chunks: ['articles'],
     }),
     new WebpackMd5Hash(),
   ],

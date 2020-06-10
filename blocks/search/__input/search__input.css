@@ -7,6 +7,11 @@
   outline: none;
 }
 
+.search__input:focus {
+  background-color: #ccc;
+}
+
+
 @media screen and (max-width: 1100px) {
   .search__input {
     margin: 17px 0 17px 24px;

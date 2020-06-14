@@ -7,8 +7,9 @@
   <meta name="description" content="Веб-страница для поиска и сохранения новостей">
   <meta name="author" content="Константин Миков">
   <title>NewsExplorer</title>
-  <link type="image/png" rel="shortcut icon" href="../../images/favicon.png">
-  <link rel="stylesheet" href="<%= htmlWebpackPlugin.files.css %>">
+  <link type="image/png" rel="shortcut icon" href="<%=require('../../images/favicon.png').default%>">
+  <link rel="stylesheet" href="articles.css">
+  <!-- <link rel="stylesheet" href="<%= htmlWebpackPlugin.files.css %>"> -->
 </head>
 <body>
 
@@ -95,7 +96,8 @@
     </header>
   </section>
 
-  <script src="<%= htmlWebpackPlugin.files.js %>"></script>
+  <script src="articles.js"></script>
+  <!-- <script src="<%= htmlWebpackPlugin.files.js %>"></script> -->
 </body>
 </html>
 

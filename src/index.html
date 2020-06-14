@@ -7,8 +7,9 @@
     <meta name="description" content="Веб-страница для поиска и сохранения новостей">
     <meta name="author" content="Константин Миков">
     <title>NewsExplorer</title>
-    <link type="image/png" rel="shortcut icon" href="../images/favicon.png">
-    <link rel="stylesheet" href="<%= htmlWebpackPlugin.files.css %>">
+    <link type="image/png" rel="shortcut icon" href="<%=require('../images/favicon.png').default%>">
+    <link type="stylesheet" href="index.css">
+    <!-- <link rel="stylesheet" href="<%= htmlWebpackPlugin.files.css %>"> -->
 </head>
 <body>
 
@@ -45,7 +46,7 @@
     </div>
 
     <div class="not-found">
-      <img class="not-found__image" src="../images/not-found.png" alt="Иконка безрезультатного поиска">
+      <img class="not-found__image" src="<%=require('../images/not-found.png').default%>" alt="Иконка безрезультатного поиска">
       <h3 class="not-found__title title">Ничего не найдено</h3>
       <p class="not-found__text text">К сожалению, по вашему запросу ничего не найдено.</p>
     </div>
@@ -86,7 +87,7 @@
   </section>
 
   <section class="about-author">
-    <img class="about-author__avatar" src="../images/avatar.png" alt="Аватар автора">
+    <img class="about-author__avatar" src="<%=require('../images/avatar.png').default%>" alt="Аватар автора">
     <div class="about-author__container">
       <h2 class="about-author__title title">Об авторе</h2>
       <p class="about-author__text text">Привет! Меня зовут Костя Миков и я начинающий веб-разработчик. По основному образованию я инженер-строитель, но, решив идти в своей жизни "не по течению", я решил сменить профессию на более близкую для меня и актуальную в современном мире. Теперь я строю API и сайты разной сложности :)</p>
@@ -198,7 +199,8 @@
     </div>
   </section>
 
-  <script src="<%= htmlWebpackPlugin.files.js %>"></script>
+  <script src="index.js"></script>
+  <!-- <script src="<%= htmlWebpackPlugin.files.js %>"></script> -->
 </body>
 </html>
 <!-- <%= htmlWebpackPlugin.files.js %> -->

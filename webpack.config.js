@@ -61,13 +61,13 @@ module.exports = {
       canPrint: true,
     }),
     new HtmlWebpackPlugin({
-      inject: false,
+      inject: true,
       template: './src/index.html',
       filename: 'index.html',
       chunks: ['index'],
     }),
     new HtmlWebpackPlugin({
-      inject: false,
+      inject: true,
       template: './src/saved-articles/articles.html',
       filename: 'articles/articles.html',
       chunks: ['articles'],

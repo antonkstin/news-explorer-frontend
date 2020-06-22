@@ -4,6 +4,7 @@
   width: 288px;
   background-color: #fff;
   border-radius: 80px;
+  display: block;
 }
 
 .results__button:hover {

@@ -1,4 +1,3 @@
-<!-- <%= htmlWebpackPlugin.files.css %> -->
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -7,9 +6,7 @@
   <meta name="description" content="Веб-страница для поиска и сохранения новостей">
   <meta name="author" content="Константин Миков">
   <title>NewsExplorer</title>
-  <link type="image/png" rel="shortcut icon" href="<%=require('../../images/favicon.png').default%>">
-  <link rel="stylesheet" href="articles.css">
-  <!-- <link rel="stylesheet" href="<%= htmlWebpackPlugin.files.css %>"> -->
+  <link type="image/png" rel="shortcut icon" href="<%=htmlWebpackPlugin.files.publicPath%><%=require('../../images/favicon.png').default%>">
 </head>
 <body>
 
@@ -19,7 +16,7 @@
     <nav class="header__links">
       <a class="link text" href="../index.html">Главная</a>
       <a class="link link_selected link_selected_dark text" href="./articles.html">Сохранённые статьи</a>
-      <a class="link link_surrounded link_surrounded_dark link_auth link_auth_dark text" href="../index.html">Грета</a>
+      <a class="link link_surrounded link_surrounded_dark link_auth link_auth_dark text"></a>
     </nav>
 
     <div class="header__icon header__icon_dark"></div>
@@ -27,43 +24,12 @@
 
   <section class="article-inf">
     <p class="article-inf__subtitle text">Сохранённые статьи</p>
-    <h2 class="article-inf__title title">Грета, у вас 5 сохранённых статей</h2>
-    <p class="article-inf__text text">По ключевым словам:
-      <span class="article-inf__keyword">Природа,</span>
-      <span class="article-inf__keyword">Тайга</span> и
-      <span class="article-inf__keyword">2 другим</span>
-    </p>
+    <h2 class="article-inf__title title"></h2>
+
   </section>
 
   <section class="results">
     <div class="cards-container">
-
-      <div class="card">
-        <div class="card__bg">
-          <p class="card__message card__message_left text">Природа</p>
-          <p class="card__message card__message_right text">Убрать из сохранённых</p>
-          <div class="card__btn card__btn_trash"></div>
-        </div>
-        <div class="card__about">
-          <p class="card__date text">2 августа, 2019</p>
-          <h3 class="card__title title">Национальное достояние - парки</h3>
-          <p class="card__text minitext">В 2016 году Америка отмечала важный юбилей: сто лет назад здесь начала складыв...</p>
-          <p class="card__source title">ЛЕНТА.РУ</p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card__bg">
-          <p class="card__message card__message_left text">Природа</p>
-          <div class="card__btn card__btn_trash"></div>
-        </div>
-        <div class="card__about">
-          <p class="card__date text">2 августа, 2019</p>
-          <h3 class="card__title title">Национальное достояние - парки</h3>
-          <p class="card__text minitext">В 2016 году Америка отмечала важный юбилей: сто лет назад здесь начала складыв...</p>
-          <p class="card__source title">МЕДУЗА</p>
-        </div>
-      </div>
 
     </div>
   </section>
@@ -96,8 +62,6 @@
     </header>
   </section>
 
-  <script src="articles.js"></script>
-  <!-- <script src="<%= htmlWebpackPlugin.files.js %>"></script> -->
 </body>
 </html>
 

@@ -13,10 +13,12 @@ export class Popup {
 
   open() {
     this.popup.setAttribute('style', 'display: flex');
+    document.body.setAttribute('style', 'overflow-y: hidden');
   }
 
   close() {
     this.popup.removeAttribute('style');
+    document.body.removeAttribute('style');
   }
 
   switchState(str) {

@@ -24,13 +24,14 @@ export class Form {
 
     this.nameField = `<div class="popup__field name-js">
                         <p class="popup__field-title">Имя</p>
-                        <input class="popup__input" name="name" type="text" placeholder="Введите своё имя" required>
+                        <input class="popup__input" name="name" type="text" placeholder="Введите своё имя" required minlength="2" maxlength="11">
                         <p class="popup__err-message popup__err-message_input"></p>
                       </div>`;
     this.errorMessages = {
       required: 'Это обязательное поле',
       minimum: 'Пароль должен быть длиннее 8 символов',
       doesntMatch: 'Неправильный формат email',
+      minName: 'Имя должно быть длиннее 2 символов',
     };
 
     this._addInputListener(this.inputEmail, this.emailErrorMessage, 'email');
@@ -68,36 +69,13 @@ export class Form {
     this._validateForm();
   }
 
-  switchToReg() {
-    this.buttonContainer.insertAdjacentHTML('beforebegin', this.nameField);
-    this.button.textContent = 'Зарегистрироваться';
-
-    this.validCounter.name = false;
-    const inputName = this.form.elements.name;
-    const nameErrorMessage = inputName.closest('.popup__field').querySelector('.popup__err-message');
-    this._addInputListener(inputName, nameErrorMessage, 'name');
-    this._validateForm();
-  }
-
-  switchToEnter() {
-    this.button.textContent = 'Войти';
-
-    // Уборка после регистрации
-    if (this.form.elements.name) {
-      this.form.elements.name.removeEventListener('input', this._validateInput);
-      this.form.removeChild(this.form.querySelector('.name-js'));
-      delete this.validCounter.name;
-    }
-
-    this._validateForm();
-  }
-
   _addInputListener(input, inputMessage, param) {
     input.addEventListener('input', this._validateInput.bind(this, input, inputMessage, param));
   }
 
   _validateInput(input, inputMessage, param) {
     let counter;
+    this.buttonErrorMessage.textContent = '';
     if (!input.validity.valid) {
       this.showError(inputMessage, this.errorMessages.doesntMatch);
       counter = false;
@@ -106,7 +84,11 @@ export class Form {
       counter = true;
     }
     if (input.validity.tooShort) {
-      this.showError(inputMessage, this.errorMessages.minimum);
+      if (input === this.inputPassword) {
+        this.showError(inputMessage, this.errorMessages.minimum);
+      } else {
+        this.showError(inputMessage, this.errorMessages.minName);
+      }
     }
     if (input.value === '') {
       this.showError(inputMessage, this.errorMessages.required);

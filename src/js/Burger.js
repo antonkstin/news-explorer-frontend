@@ -8,9 +8,11 @@ export class Burger {
 
   open() {
     this.block.setAttribute('style', 'display: block');
+    document.body.setAttribute('style', 'overflow-y: hidden');
   }
 
   close() {
     this.block.removeAttribute('style');
+    document.body.removeAttribute('style');
   }
 }

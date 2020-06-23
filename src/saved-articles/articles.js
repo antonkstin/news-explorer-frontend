@@ -23,20 +23,24 @@ const keywords = [];
 
 mainApi.getUserData()
   .then((res) => {
-    header.userName = res.name;
-    header.isLoggedIn = true;
-    header.renderSecondPage();
+    if (res.message) {
+      document.location.href = '../index.html';
+    } else {
+      header.userName = res.name;
+      header.isLoggedIn = true;
+      header.renderSecondPage();
 
-    mainApi.getArticles()
-      .then((results) => {
-        myArticles = results;
-        articleInf.renderTitle(res.name, results.length);
-        results.forEach((item) => {
-          keywords.push(item.keyword);
-          cardList.render(card.createSecondPage(item));
+      mainApi.getArticles()
+        .then((results) => {
+          myArticles = results;
+          articleInf.renderTitle(res.name, results.length);
+          results.forEach((item) => {
+            keywords.push(item.keyword);
+            cardList.render(card.createSecondPage(item));
+          });
+          articleInf.renderText(keywords);
         });
-        articleInf.renderText(keywords);
-      });
+    }
   })
   .catch((err) => { console.log(err); });
 
@@ -69,7 +73,7 @@ cardList.container.addEventListener('click', (event) => {
 });
 
 burger.block.addEventListener('click', (event) => {
-  if (event.target === burger.icon) {
+  if (event.target === burger.icon || event.target.classList.contains('burger-menu')) {
     burger.close();
   }
 });

@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable consistent-return */
 /* eslint-disable no-restricted-syntax */
@@ -42,6 +43,11 @@ function drowStack() {
       results.hide(results.button);
       break;
     }
+
+    if (articles[i].urlToImage === null) {
+      articles[i].urlToImage = 'https://i.ytimg.com/vi/pqHcFTzEnis/maxresdefault.jpg';
+    }
+
     const unfinishedCard = card.create(converter(articles[i]));
     cardList.render(unfinishedCard);
 
@@ -57,7 +63,15 @@ function drowStack() {
   }
 }
 
-// При загрузке сайта сразу эе отправляется запрос на сервер (с куками, если имеются)
+function closePopup() {
+  popup.close();
+  form.clearForm();
+  form.nullifiedValidity();
+  form.switchState('enter');
+  popup.switchState('enter');
+}
+
+// При загрузке сайта сразу же отправляется запрос на сервер (с куками, если имеются)
 // для отрисовки нужного хедера
 mainApi.getUserData()
   .then((res) => {
@@ -81,6 +95,9 @@ mainApi.getUserData()
 // если хочет разлогинится - изменится хедер
 header.headers.forEach((item) => {
   item.addEventListener('click', (event) => {
+    if (popup.popup.hasAttribute('style')) {
+      closePopup();
+    }
     if (event.target.classList.contains('link_surrounded')) {
       if (!header.isLoggedIn) {
         popup.open();
@@ -119,12 +136,8 @@ header.headers.forEach((item) => {
 //    на него обработчик ввода)
 //
 popup.popup.addEventListener('click', (event) => {
-  if (event.target.classList.contains('popup__close')) {
-    popup.close();
-    form.clearForm();
-    form.nullifiedValidity();
-    form.switchState('enter');
-    popup.switchState('enter');
+  if (event.target.classList.contains('popup__close') || event.target.classList.contains('popup')) {
+    closePopup();
   }
 
   if (event.target.classList.contains('popup__link')) {
@@ -140,6 +153,12 @@ popup.popup.addEventListener('click', (event) => {
       form.switchState('enter');
       popup.switchState('enter');
     }
+  }
+});
+
+document.addEventListener('keyup', (event) => {
+  if (event.key === 'Escape' && popup.popup.hasAttribute('style')) {
+    closePopup();
   }
 });
 
@@ -277,7 +296,7 @@ cardList.container.addEventListener('click', (event) => {
 });
 
 burger.block.addEventListener('click', (event) => {
-  if (event.target === burger.icon) {
+  if (event.target === burger.icon || event.target.classList.contains('burger-menu')) {
     burger.close();
   }
 });

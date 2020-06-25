@@ -23,33 +23,32 @@ const keywords = [];
 
 mainApi.getUserData()
   .then((res) => {
-    if (res.message) {
-      document.location.href = '../index.html';
-    } else {
-      header.userName = res.name;
-      header.isLoggedIn = true;
-      header.renderSecondPage();
+    header.userName = res.name;
+    header.isLoggedIn = true;
+    header.renderSecondPage();
 
-      mainApi.getArticles()
-        .then((results) => {
-          myArticles = results;
-          articleInf.renderTitle(res.name, results.length);
-          results.forEach((item) => {
-            keywords.push(item.keyword);
-            cardList.render(card.createSecondPage(item));
-          });
-          articleInf.renderText(keywords);
+    mainApi.getArticles()
+      .then((results) => {
+        myArticles = results;
+        articleInf.renderTitle(res.name, results.length);
+        results.forEach((item) => {
+          keywords.push(item.keyword);
+          cardList.render(card.createSecondPage(item));
         });
-    }
+        articleInf.renderText(keywords);
+      })
+      .catch((err) => { console.log(err); });
   })
-  .catch((err) => { console.log(err); });
+  .catch(() => {
+    document.location.href = '../index.html';
+  });
 
 header.headers.forEach((item) => {
   item.addEventListener('click', (event) => {
     if (event.target.classList.contains('link_surrounded')) {
       event.preventDefault();
       mainApi.deleteCookie()
-        .then((res) => { console.log(res); document.location.href = '../index.html'; })
+        .then(() => { document.location.href = '../index.html'; })
         .catch((err) => { console.log(err); });
     }
     if (event.target === header.icon) {

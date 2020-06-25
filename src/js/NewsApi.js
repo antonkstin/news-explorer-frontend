@@ -1,21 +1,40 @@
+/* eslint-disable class-methods-use-this */
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable import/prefer-default-export */
 /* eslint-disable no-undef */
 export class NewsApi {
-  constructor() {
+  constructor(days) {
     this.link = 'https://praktikum.tk/news/v2/everything?';
     this.apiKey = '80c56555c03e4564980aed5f6b4d71cb';
     this.pageSize = 100;
 
+    this.numberOfDaysAgo = days;
     this.date = new Date();
-    this.year = this.date.getFullYear();
-    this.month = this.date.getMonth();
-    this.day = this.date.getDate();
-    this.dateString = `${this.year}-${this.month}-${this.day}`;
-    this.dateStringWeekAgo = `${this.year}-${this.month}-${this.day - 7}`;
+
+    this.dateString = '';
+    this.dateStringWeekAgo = '';
+
+    this._dateConverter(this.date);
   }
 
   getNews(keyword) {
     return fetch(`${this.link}q=${keyword}&from=${this.dateString}&to=${this.dateStringWeekAgo}&pageSize=${this.pageSize}&apiKey=${this.apiKey}`)
-      .then((res) => res.json());
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(res);
+      });
+  }
+
+  _dateConverter(date) {
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const day = date.getDate();
+
+    const dateWeekAgo = new Date(year, month, day - this.numberOfDaysAgo);
+
+    this.dateString = `${year}-${month}-${day}`;
+    this.dateStringWeekAgo = `${dateWeekAgo.getFullYear()}-${dateWeekAgo.getMonth()}-${dateWeekAgo.getDate()}`;
   }
 }

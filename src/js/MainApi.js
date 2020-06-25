@@ -17,7 +17,12 @@ export class MainApi {
         name,
       }),
     })
-      .then((res) => res.json());
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(res);
+      });
   }
 
   signin(email, password) {
@@ -32,7 +37,12 @@ export class MainApi {
         password,
       }),
     })
-      .then((res) => res.json());
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(res);
+      });
   }
 
   getUserData() {
@@ -43,7 +53,12 @@ export class MainApi {
         'Content-Type': 'application/json',
       },
     })
-      .then((res) => res.json());
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(res);
+      });
   }
 
   createArticle(article, keyword) {
@@ -66,7 +81,12 @@ export class MainApi {
         image,
       }),
     })
-      .then((res) => res.json());
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(res);
+      });
   }
 
   removeArticle(id) {
@@ -77,7 +97,12 @@ export class MainApi {
         'Content-Type': 'application/json',
       },
     })
-      .then((res) => res.json());
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(res);
+      });
   }
 
   getArticles() {
@@ -88,7 +113,12 @@ export class MainApi {
         'Content-Type': 'application/json',
       },
     })
-      .then((res) => res.json());
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(res);
+      });
   }
 
   deleteCookie() {
@@ -99,6 +129,11 @@ export class MainApi {
         'Content-Type': 'application/json',
       },
     })
-      .then((res) => res.json());
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(res);
+      });
   }
 }

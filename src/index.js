@@ -28,7 +28,7 @@ const card = new NewsCard();
 const cardList = new NewsCardList();
 const burger = new Burger();
 const mainApi = new MainApi();
-const newsApi = new NewsApi();
+const newsApi = new NewsApi(7);
 
 let limit = 0;
 let keyword = '';
@@ -75,14 +75,14 @@ function closePopup() {
 // для отрисовки нужного хедера
 mainApi.getUserData()
   .then((res) => {
-    if (res.message) {
-      return Promise.reject(res);
-    }
     header.userName = res.name;
     header.isLoggedIn = true;
-    return header.render();
+    header.render();
   })
-  .catch((err) => { console.log(err); });
+  .catch(async (err) => {
+    const res = await err.json();
+    console.log(res);
+  });
 
 
 // Слушатели событий
@@ -135,7 +135,7 @@ header.headers.forEach((item) => {
 //    тайтле, ссылке (если есть: удалит/добавит поле инпута имени, удалит/добавит
 //    на него обработчик ввода)
 //
-popup.popup.addEventListener('click', (event) => {
+popup.popup.addEventListener('mousedown', (event) => {
   if (event.target.classList.contains('popup__close') || event.target.classList.contains('popup')) {
     closePopup();
   }
@@ -169,24 +169,20 @@ form.form.addEventListener('submit', (event) => {
 
   if (form.state === 'reg') {
     mainApi.signup(form.inputEmail.value, form.inputPassword.value, form.form.elements.name.value)
-      .then((res) => {
-        if (res.message) {
-          form.showError(form.buttonErrorMessage, res.message);
-          return Promise.reject(res);
-        }
+      .then(() => {
         popup.switchState('success');
         return form.switchState('success');
       })
-      .catch((err) => { console.log(err); });
+      .catch(async (err) => {
+        const res = await err.json();
+        form.showError(form.buttonErrorMessage, res.message);
+        console.log(res);
+      });
   }
 
   if (form.state === 'enter') {
     mainApi.signin(form.inputEmail.value, form.inputPassword.value)
       .then((res) => {
-        if (res.message) {
-          form.showError(form.buttonErrorMessage, res.message);
-          return Promise.reject(res);
-        }
         header.isLoggedIn = true;
         header.userName = res.name;
         header.render();
@@ -197,7 +193,11 @@ form.form.addEventListener('submit', (event) => {
         searchForm.input.value = '';
         return form.switchState('enter');
       })
-      .catch((err) => { console.log(err); });
+      .catch(async (err) => {
+        const res = await err.json();
+        form.showError(form.buttonErrorMessage, res.message);
+        console.log(res);
+      });
   }
 });
 
@@ -252,7 +252,7 @@ searchForm.form.addEventListener('submit', (event) => {
         }
       }
     })
-    .catch((err) => { console.log(err); });
+    .catch((err) => { alert(err); console.log(err); });
 });
 
 // Покажи еще
@@ -283,14 +283,15 @@ cardList.container.addEventListener('click', (event) => {
       card.showMessage(event.target);
     } else {
       mainApi.createArticle(converter(articles[Array.from(cardList.container.querySelectorAll('.card__btn_flag')).indexOf(event.target)]), keyword)
-        .then((res) => { console.log(res); })
-        .catch((err) => { console.log(err); });
+        .then((res) => {
+          card.renderIcon(event.target);
 
-      mainApi.getArticles()
-        .then((res) => { myArticles = res; })
-        .catch((err) => { console.log(err); });
+          mainApi.getArticles()
+            .then((result) => { myArticles = result; });
 
-      card.renderIcon(event.target);
+          console.log(res);
+        })
+        .catch((err) => { console.log(err); });
     }
   }
 });

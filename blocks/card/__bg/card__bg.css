@@ -1,6 +1,5 @@
 .card__bg {
   position: relative;
-  background-image: url(../../../images/lenta.png);
   background-size: cover;
   height: 272px;
 }

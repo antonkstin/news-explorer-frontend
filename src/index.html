@@ -1,4 +1,3 @@
-<!-- <%= htmlWebpackPlugin.files.css %> -->
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -8,8 +7,6 @@
     <meta name="author" content="Константин Миков">
     <title>NewsExplorer</title>
     <link type="image/png" rel="shortcut icon" href="<%=require('../images/favicon.png').default%>">
-    <link type="stylesheet" href="index.css">
-    <!-- <link rel="stylesheet" href="<%= htmlWebpackPlugin.files.css %>"> -->
 </head>
 <body>
 
@@ -29,8 +26,8 @@
     <div class="search__container">
       <h1 class="search__title title">Что в мире творится?</h1>
       <p class="search__text text">Находите самые свежие статьи на любую тему и сохраняйте в своём личном кабинете.</p>
-      <form class="search__form">
-        <input class="search__input minitext" type="text" placeholder="Введите тему новости" required>
+      <form class="search__form" name="search">
+        <input class="search__input minitext" name="input" type="text" placeholder="Введите тему новости" required>
         <button class="search__button button text">Искать</button>
       </form>
     </div>
@@ -38,51 +35,26 @@
   </section>
 
 
-  <section class="results">
+  <section class="results" style="display: none;">
 
-    <div class="preload">
+    <h2 class="results__title title">Результаты поиска</h2>
+
+    <div class="preload" style="display: none;">
       <div class="preload__circle"></div>
       <p class="preload__text text">Идёт поиск новостей...</p>
     </div>
 
-    <div class="not-found">
+    <div class="not-found" style="display: none;">
       <img class="not-found__image" src="<%=require('../images/not-found.png').default%>" alt="Иконка безрезультатного поиска">
       <h3 class="not-found__title title">Ничего не найдено</h3>
       <p class="not-found__text text">К сожалению, по вашему запросу ничего не найдено.</p>
     </div>
 
-    <h2 class="results__title title">Результаты поиска</h2>
-
     <div class="cards-container">
-
-      <div class="card">
-        <div class="card__bg">
-          <p class="card__message card__message_right text">Войдите, чтобы сохранять статьи</p>
-          <div class="card__btn card__btn_flag"></div>
-        </div>
-        <div class="card__about">
-          <p class="card__date text">2 августа, 2019</p>
-          <h3 class="card__title title">Национальное достояние - парки</h3>
-          <p class="card__text minitext">В 2016 году Америка отмечала важный юбилей: сто лет назад здесь начала складыв...</p>
-          <p class="card__source title">ЛЕНТА.РУ</p>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card__bg">
-          <div class="card__btn card__btn_flag-active"></div>
-        </div>
-        <div class="card__about">
-          <p class="card__date text">2 августа, 2019</p>
-          <h3 class="card__title title">Национальное достояние - парки</h3>
-          <p class="card__text minitext">В 2016 году Америка отмечала важный юбилей: сто лет назад здесь начала складыв...</p>
-          <p class="card__source title">РИА</p>
-        </div>
-      </div>
 
     </div>
 
-    <button class="results__button text button">Показать ещё</button>
+    <button class="results__button text button" style="display: none;">Показать ещё</button>
 
   </section>
 
@@ -90,7 +62,7 @@
     <img class="about-author__avatar" src="<%=require('../images/avatar.png').default%>" alt="Аватар автора">
     <div class="about-author__container">
       <h2 class="about-author__title title">Об авторе</h2>
-      <p class="about-author__text text">Привет! Меня зовут Костя Миков и я начинающий веб-разработчик. По основному образованию я инженер-строитель, но, решив идти в своей жизни "не по течению", я решил сменить профессию на более близкую для меня и актуальную в современном мире. Теперь я строю API и сайты разной сложности :)</p>
+      <p class="about-author__text text">Привет! Меня зовут Костя Миков и я начинающий веб-разработчик. По основному образованию я инженер-строитель, но, решив идти в своей жизни "не по течению", я переквалифицировался на более близкую для меня и актуальную в современном мире профессию. Теперь я строю API и веб-страницы разной сложности :)</p>
       <p class="about-author__text text">Начал я с курса Яндекс.Практикума под кодовым названием "Веб-разработчик". Девять месяцев моей профильной учебы отражены в этом самостоятельном проекте. Здесь использованы: сервер на Node.js (express) в связке с базой данных MongoDB, сборка проекта Webpack'ом, вёрстка по BEM и, конечно, HTML5, CSS3 и нативный JavaScript.</p>
     </div>
   </section>
@@ -122,85 +94,36 @@
     </header>
   </section>
 
-  <!-- Вход -->
-  <section class="popup popup_enter">
-    <div class="popup__container popup__container_enter">
+  <!-- Попап -->
+  <section class="popup">
+    <div class="popup__container">
       <div class="popup__close"></div>
       <h2 class="popup__title text">Вход</h2>
-      <form class="popup__form">
+      <form class="popup__form" name="enter" novalidate>
 
         <div class="popup__field">
           <p class="popup__field-title">Email</p>
-          <input class="popup__input" type="text" placeholder="Введите почту" required>
-          <p class="popup__err-message popup__err-message_input">Неправильный формат email</p>
+          <input class="popup__input" name="email" type="email" placeholder="Введите почту" required pattern="^\w{2,}([-\.]\w+)*@\w{2,}(\.[a-zA-Z]{2,})+$">
+          <p class="popup__err-message popup__err-message_input"></p>
         </div>
 
         <div class="popup__field">
           <p class="popup__field-title">Пароль</p>
-          <input class="popup__input" type="password" placeholder="Введите пароль" required>
-          <p class="popup__err-message popup__err-message_input">Длина пароля должна быть больше 8 символов</p>
+          <input class="popup__input" name="password" type="password" placeholder="Введите пароль" required minlength="8">
+          <p class="popup__err-message popup__err-message_input"></p>
         </div>
 
         <div class="popup__button-container">
+          <p class="popup__err-message popup__err-message_common"></p>
           <button class="popup__button button text popup__button_blocked">Войти</button>
         </div>
-        <p class="popup__ending">
-          или
-          <span class="popup__link">Зарегистрироваться</span>
-        </p>
-
       </form>
+      <p class="popup__ending">
+        или
+        <span class="popup__link">Зарегистрироваться</span>
+      </p>
     </div>
   </section>
 
-  <!-- Регистрация -->
-  <section class="popup popup_reg">
-    <div class="popup__container">
-      <div class="popup__close"></div>
-      <h2 class="popup__title text">Вход</h2>
-      <form class="popup__form">
-
-        <div class="popup__field">
-          <p class="popup__field-title">Email</p>
-          <input class="popup__input" type="text" placeholder="Введите почту" required>
-          <p class="popup__err-message popup__err-message_input">Неправильный формат email</p>
-        </div>
-
-        <div class="popup__field">
-          <p class="popup__field-title">Пароль</p>
-          <input class="popup__input" type="password" placeholder="Введите пароль" required>
-          <p class="popup__err-message popup__err-message_input">Длина пароля должна быть больше 8 символов</p>
-        </div>
-
-        <div class="popup__field">
-          <p class="popup__field-title">Имя</p>
-          <input class="popup__input" type="text" placeholder="Введите своё имя" required>
-        </div>
-
-        <div class="popup__button-container">
-          <p class="popup__err-message popup__err-message_common">Такой пользователь уже есть</p>
-          <button class="popup__button button text">Зарегистрироваться</button>
-        </div>
-        <p class="popup__ending">
-          или
-          <span class="popup__link">Войти</span>
-        </p>
-
-      </form>
-    </div>
-  </section>
-
-  <!-- Пользователь зарегистрирован -->
-  <section class="popup popup_success">
-    <div class="popup__container">
-      <div class="popup__close"></div>
-      <h2 class="popup__title text">Пользователь успешно зарегистрирован!</h2>
-      <p class="popup__link popup__link_success">Выполнить вход</p>
-    </div>
-  </section>
-
-  <script src="index.js"></script>
-  <!-- <script src="<%= htmlWebpackPlugin.files.js %>"></script> -->
 </body>
 </html>
-<!-- <%= htmlWebpackPlugin.files.js %> -->
